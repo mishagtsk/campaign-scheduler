@@ -31,6 +31,7 @@ namespace CampaignScheduler.CampaignSender.Extensions
         {
             services.AddScoped<ICampaignsProcessor, CampaignsProcessor>();
             services.AddScoped<ICampaignProcessor, CampaignProcessor>();
+            services.AddScoped<IFileProcessor, FileProcessor>();
 
             return services;
         }

@@ -9,10 +9,12 @@ namespace CampaignScheduler.CampaignSender.Processors
         private readonly string _templatesDirectory;
 
         private readonly ICampaignsRepository _campaignsRepository;
+        private readonly IFileProcessor _fileProcessor;
 
-        public CampaignProcessor(ICampaignsRepository campaignsRepository)
+        public CampaignProcessor(ICampaignsRepository campaignsRepository, IFileProcessor fileProcessor)
         {
             _campaignsRepository = campaignsRepository;
+            _fileProcessor = fileProcessor;
             _templatesDirectory = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)}/Templates";
         }
 
@@ -23,8 +25,8 @@ namespace CampaignScheduler.CampaignSender.Processors
                 return;
             }
 
-            var content = await File.ReadAllTextAsync(BuildTemplateFilePath(campaign.Template), cancellationToken);
-            await File.AppendAllTextAsync(fileToWrite, GetCustomerInfo(campaign) + content + Environment.NewLine,
+            var content = await _fileProcessor.ReadAllTextAsync(BuildTemplateFilePath(campaign.Template), cancellationToken);
+            await _fileProcessor.AppendAllTextAsync(fileToWrite, GetCustomerInfo(campaign) + content + Environment.NewLine,
                 cancellationToken);
             
             campaign.IsSent = true;

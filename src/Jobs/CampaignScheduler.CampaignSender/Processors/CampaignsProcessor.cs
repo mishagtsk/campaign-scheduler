@@ -15,17 +15,19 @@ namespace CampaignScheduler.CampaignSender.Processors
         private readonly ILogger<CampaignsProcessor> _logger;
         private readonly CampaignSenderOptions _options;
         private readonly ICampaignProcessor _campaignProcessor;
+        private readonly IFileProcessor _fileProcessor;
 
         public CampaignsProcessor(
             ICampaignsRepository campaignsRepository, 
             ILogger<CampaignsProcessor> logger,
             IOptions<CampaignSenderOptions> options, 
-            ICampaignProcessor campaignProcessor)
+            ICampaignProcessor campaignProcessor, IFileProcessor fileProcessor)
         {
             _campaignsRepository = campaignsRepository;
             _logger = logger;
             _options = options.Value;
             _campaignProcessor = campaignProcessor;
+            _fileProcessor = fileProcessor;
 
             _sendsDirectory = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)}/Sends";
         }
@@ -38,9 +40,9 @@ namespace CampaignScheduler.CampaignSender.Processors
 
             _logger.LogInformation("Found {TotalCount} campaigns to process.", campaigns.Count);
 
-            Directory.CreateDirectory(_sendsDirectory);
-            var filePath = BuildSendsFilePath();
-            File.Create(filePath).Close();
+            _fileProcessor.CreateDirectory(_sendsDirectory);
+            var filePath = BuildSendsFilePath(); 
+            _fileProcessor.CreateFile(filePath);
 
             var processedCount = 0;
 
