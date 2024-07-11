@@ -21,7 +21,8 @@ namespace CampaignScheduler.Data.Migrations
                     Gender = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     City = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Deposit = table.Column<int>(type: "int", nullable: false),
-                    NewCustomer = table.Column<bool>(type: "bit", nullable: false)
+                    NewCustomer = table.Column<bool>(type: "bit", nullable: false),
+                    CampaignSentDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,13 +30,12 @@ namespace CampaignScheduler.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Campaign",
+                name: "Campaigns",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Template = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    DateToSend = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TimeToSend = table.Column<TimeSpan>(type: "time", nullable: false),
                     Priority = table.Column<int>(type: "int", nullable: false),
                     IsSent = table.Column<bool>(type: "bit", nullable: false),
@@ -43,9 +43,9 @@ namespace CampaignScheduler.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Campaign", x => x.Id);
+                    table.PrimaryKey("PK_Campaigns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Campaign_Customers_CustomerId",
+                        name: "FK_Campaigns_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
@@ -53,8 +53,8 @@ namespace CampaignScheduler.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Campaign_CustomerId",
-                table: "Campaign",
+                name: "IX_Campaigns_CustomerId",
+                table: "Campaigns",
                 column: "CustomerId");
         }
 
@@ -62,7 +62,7 @@ namespace CampaignScheduler.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Campaign");
+                name: "Campaigns");
 
             migrationBuilder.DropTable(
                 name: "Customers");

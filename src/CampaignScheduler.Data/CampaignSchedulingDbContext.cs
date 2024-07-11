@@ -16,5 +16,6 @@ namespace CampaignScheduler.Data
         }
 
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Campaign> Campaigns { get; set; }
     }
 }

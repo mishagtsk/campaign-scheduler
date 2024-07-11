@@ -1,6 +1,10 @@
 ﻿using CampaignScheduler.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using CampaignScheduler.Data.Repositories;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using CampaignScheduler.WebApi.Validation;
 
 namespace CampaignScheduler.WebApi.Extensions
 {
@@ -11,6 +15,9 @@ namespace CampaignScheduler.WebApi.Extensions
             services.AddDbContext<CampaignSchedulingDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DbContext")));
 
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICampaignsRepository, CampaignsRepository>();
+
             return services;
         }
 
@@ -19,6 +26,15 @@ namespace CampaignScheduler.WebApi.Extensions
             var assembly = Assembly.GetExecutingAssembly();
 
             services.AddAutoMapper(assembly);
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomValidation(this IServiceCollection services)
+        {
+            services.AddFluentValidationAutoValidation();
+
+            services.AddValidatorsFromAssemblyContaining<CampaignDtoValidator>();
 
             return services;
         }

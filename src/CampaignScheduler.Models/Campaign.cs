@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CampaignScheduler.Models
 {
@@ -14,9 +9,6 @@ namespace CampaignScheduler.Models
         [Required]
         [MaxLength(50)]
         public string Template { get; set; }
-
-        [Required]
-        public DateTime DateToSend { get; set; }
 
         [Required]
         public TimeSpan TimeToSend { get; set; }

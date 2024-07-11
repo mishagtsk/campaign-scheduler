@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CampaignScheduler.Models
 {
     public class Customer
     {
+        private ICollection<Campaign> _campaigns;
+
         public int Id { get; set; }
 
         [Required]
@@ -27,7 +24,12 @@ namespace CampaignScheduler.Models
 
         [Required]
         public bool NewCustomer { get; set; }
+        public DateTime? CampaignSentDate { get; set; }
 
-        public virtual ICollection<Campaign> Campaigns { get; set; }
+        public virtual ICollection<Campaign> Campaigns
+        {
+            get => _campaigns ??= [];
+            set => _campaigns = value;
+        }
     }
 }

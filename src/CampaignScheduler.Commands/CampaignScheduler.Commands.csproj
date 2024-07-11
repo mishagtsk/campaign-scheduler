@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CampaignScheduler.Contracts\CampaignScheduler.Contracts.csproj" />
+    <ProjectReference Include="..\CampaignScheduler.Data\CampaignScheduler.Data.csproj" />
   </ItemGroup>
 
 </Project>

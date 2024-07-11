@@ -1,7 +1,5 @@
 using CampaignScheduler.Commands.Scheduling;
-using CampaignScheduler.Data;
 using CampaignScheduler.WebApi.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +16,7 @@ builder.Services.AddMediatR(config =>
     config.RegisterServicesFromAssemblyContaining<ScheduleCampaignCommandHandler>();
 });
 builder.Services.AddMappingProfiles();
+builder.Services.AddCustomValidation();
 
 var app = builder.Build();
 

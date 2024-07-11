@@ -2,24 +2,26 @@
 using CampaignScheduler.Commands.Scheduling;
 using CampaignScheduler.WebApi.Models;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CampaignScheduler.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v1/campaign")]
+    [AllowAnonymous]
     public class CampaignController
     {
         [HttpPost("schedule")]
         public async Task<IActionResult> ScheduleCampaign(
-            [FromBody] ScheduleDto scheduleDto,
+            [FromBody] CampaignDto[] campaigns,
             [FromServices] IMapper mapper,
             [FromServices] IMediator mediator,
             CancellationToken cancellationToken)
         {
             ScheduleCampaignCommand command = new ScheduleCampaignCommand
             {
-                Schedule = mapper.Map<Contracts.Scheduling.ScheduleDto>(scheduleDto)
+                Campaigns = mapper.Map<ICollection<Contracts.Scheduling.CampaignDto>>(campaigns)
             };
 
             await mediator.Send(command, cancellationToken);

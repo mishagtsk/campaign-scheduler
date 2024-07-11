@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CampaignScheduler.Data.Migrations
 {
     [DbContext(typeof(CampaignSchedulingDbContext))]
-    [Migration("20240710152134_initialCommit")]
+    [Migration("20240711105236_initialCommit")]
     partial class initialCommit
     {
         /// <inheritdoc />
@@ -36,9 +36,6 @@ namespace CampaignScheduler.Data.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateToSend")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsSent")
                         .HasColumnType("bit");
 
@@ -57,7 +54,7 @@ namespace CampaignScheduler.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Campaign");
+                    b.ToTable("Campaigns");
                 });
 
             modelBuilder.Entity("CampaignScheduler.Models.Customer", b =>
@@ -70,6 +67,9 @@ namespace CampaignScheduler.Data.Migrations
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("CampaignSentDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("City")
                         .IsRequired()

@@ -7,7 +7,7 @@ namespace CampaignScheduler.WebApi.Mappings
     {
         public ScheduleCampaignProfile()
         {
-            CreateMap<ScheduleDto, Contracts.Scheduling.ScheduleDto>()
+            CreateMap<CampaignDto, Contracts.Scheduling.CampaignDto>()
                 .ForMember(x => x.Priority, m => m.MapFrom(s => s.Priority))
                 .ForMember(x => x.Template, m => m.MapFrom(s => s.Template))
                 .ForMember(x => x.TimeToSend, m => m.MapFrom(s => s.TimeToSend))
