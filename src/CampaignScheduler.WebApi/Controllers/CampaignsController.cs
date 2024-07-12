@@ -8,9 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace CampaignScheduler.WebApi.Controllers
 {
     [ApiController]
-    [Route("api/v1/campaign")]
+    [Route("api/v1/campaigns")]
     [AllowAnonymous]
-    public class CampaignController
+    public class CampaignsController
     {
         [HttpPost("schedule")]
         public async Task<IActionResult> ScheduleCampaign(
